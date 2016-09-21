@@ -18,8 +18,8 @@ end
 
 post "/check" do |env|
   env.response.content_type = "application/json"
-  uuid = env.params.json["uuid"] as String
-  contents = env.params.json["contents"] as String
+  uuid = env.params.json["uuid"]
+  contents = env.params.json["contents"]
 
   ExercismCfs::FileHandler.save_to_file(uuid, contents)
   ExercismCfs::FormatChecker.check_file(uuid)
