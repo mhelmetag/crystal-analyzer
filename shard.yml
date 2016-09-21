@@ -1,0 +1,9 @@
+name: exercism_cfs
+version: 0.1.0
+authors:
+  - Max Helmetag <mhelmetag@gmail.com>
+license: MIT
+dependencies:
+  kemal:
+    github: sdogruyol/kemal
+    branch: master
