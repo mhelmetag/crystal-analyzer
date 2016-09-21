@@ -4,26 +4,30 @@ require "kemal"
 require "json"
 
 get "/" do |env|
-  name = env.params.query["name"]
-  if name != nil
-    "Hello, #{name}"
+  env.response.content_type = "application/json"
+  name = env.params.query["name"]?
+  if name
+    {result: "Hello, #{name}"}
   else
-    "Hello, Exercism"
+    {result: "Hello, Exercism"}
   end
 end
 
-get "/version" do
-  ExercismCfs::VERSION
+get "/version" do |env|
+  env.response.content_type = "application/json"
+  {version: ExercismCfs::VERSION}
 end
 
 post "/check" do |env|
   env.response.content_type = "application/json"
-  uuid = env.params.json["uuid"]
-  contents = env.params.json["contents"]
-
-  ExercismCfs::FileHandler.save_to_file(uuid, contents)
-  ExercismCfs::FormatChecker.check_file(uuid)
-  ExercismCfs::FileHandler.remove_file(uuid)
+  uuid = env.params.json["uuid"].to_s
+  contents = env.params.json["contents"].to_s
+  ExercismCfs::FileHandler.save_code_file(uuid, contents)
+  ExercismCfs::FormatChecker.check_code_file(uuid)
+  result = ExercismCfs::FileHandler.read_json_file(uuid)
+  ExercismCfs::FileHandler.remove_dir(uuid)
 
   {uuid: uuid, result: result}
 end
+
+Kemal.run
