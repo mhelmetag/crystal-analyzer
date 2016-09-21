@@ -2,7 +2,7 @@ module ExercismCfs
   module FileHandler
     def save_file(uuid : String, contents : String)
       check_code_dir(uuid)
-      filepath = "./tmp/#{uuid}/code.cr")
+      filepath = "./tmp/#{uuid}/code.cr"
       File.write(filepath, contents)
       filepath
     end
