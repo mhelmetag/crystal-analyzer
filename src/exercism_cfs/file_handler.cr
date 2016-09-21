@@ -1,5 +1,7 @@
 module ExercismCfs
   module FileHandler
+    extend self
+
     def save_file(uuid : String, contents : String)
       check_code_dir(uuid)
       filepath = "./tmp/#{uuid}/code.cr"
