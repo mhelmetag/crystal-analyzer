@@ -1,2 +1,2 @@
 require "spec"
-require "../src/exercism_cfs"
+require "../src/exercism_cfs/*"

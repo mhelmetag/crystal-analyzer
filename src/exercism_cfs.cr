@@ -19,15 +19,27 @@ get "/version" do |env|
 end
 
 post "/check" do |env|
-  env.response.content_type = "application/json"
-  uuid = env.params.json["uuid"].to_s
-  contents = env.params.json["contents"].to_s
-  ExercismCfs::FileHandler.save_code_file(uuid, contents)
-  ExercismCfs::FormatChecker.check_code_file(uuid)
-  result = ExercismCfs::FileHandler.read_json_file(uuid)
-  ExercismCfs::FileHandler.remove_dir(uuid)
-
-  {uuid: uuid, result: result}
+  begin
+    env.response.content_type = "application/json"
+    puts "env: #{env.params}"
+    uuid = env.params.json["uuid"]?.to_s
+    puts "uuid: #{uuid}"
+    contents = env.params.json["contents"]?.to_s
+    puts "contents:\n#{contents}"
+    if uuid && contents
+      file_handler = ExercismCfs::FileHandler.new(uuid, contents)
+      filepath = file_handler.save_code_file
+      result = ExercismCfs::FormatChecker.check_code_file(filepath) ? "formatted" : "unformatted"
+      file_handler.remove_tmp_dir
+      {uuid: uuid, result: result}
+    else
+      env.response.status_code = 400
+      {error: "you must supply a uuid and file contents"}
+    end
+  rescue error : Exception
+    env.response.status_code = 666
+    {error: error.message}
+  end
 end
 
 Kemal.run

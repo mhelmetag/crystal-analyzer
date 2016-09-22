@@ -2,9 +2,8 @@ module ExercismCfs
   module FormatChecker
     extend self
 
-    def check_code_file(uuid : String)
-      dirpath = "./tmp/#{uuid}"
-      system %(crystal tool format -f json #{dirpath}/code.cr > #{dirpath}/result.json)
+    def check_code_file(filepath : String)
+      system %(crystal tool format --check #{filepath})
     end
   end
 end

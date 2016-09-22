@@ -2,3 +2,4 @@
 /libs/
 /.crystal/
 /.shards/
+./exercism_cfs
