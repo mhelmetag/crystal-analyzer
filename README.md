@@ -55,10 +55,10 @@ puts response.read_body
 
 ### Client Response (Unformatted)
 ```json
-{uuid: "d96b02cd-4b22-452a-8f54-a8b4819fc457", result: "unformatted"}
+{"uuid": "d96b02cd-4b22-452a-8f54-a8b4819fc457", "result": "unformatted"}
 ```
 
 ### Client Response (Formatted)
 ```json
-{uuid: "cd35fe13-9196-4aa3-bcd8-9b8ea3984b20", result: "formatted"}
+{"uuid": "cd35fe13-9196-4aa3-bcd8-9b8ea3984b20", "result": "formatted"}
 ```
