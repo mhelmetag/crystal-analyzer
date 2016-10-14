@@ -7,40 +7,42 @@ get "/" do |env|
   env.response.content_type = "application/json"
   name = env.params.query["name"]?
   if name
-    {result: "Hello, #{name}"}
+    {result: "Hello, #{name}"}.to_json
   else
-    {result: "Hello, Exercism"}
+    {result: "Hello, Crystal"}.to_json
   end
 end
 
 get "/version" do |env|
   env.response.content_type = "application/json"
-  {version: ExercismCfs::VERSION}
+  {version: ExercismCfs::VERSION}.to_json
 end
 
 post "/check" do |env|
+  env.response.content_type = "application/json"
   begin
-    env.response.content_type = "application/json"
     id = env.params.json["id"]?.to_s
     contents = env.params.json["contents"]?.to_s
     if id && contents
       file_handler = ExercismCfs::FileHandler.new(contents)
       filepath = file_handler.save_code_file
-      formatted = ExercismCfs::FormatChecker.check_code_file(filepath)
-      result = if formatted
-                 "formatted"
+      unformatted = ExercismCfs::FormatChecker.valid_format?(filepath)
+      result = if unformatted
+                 "true"
                else
-                 "unformatted"
+                 "false"
                end
       file_handler.remove_tmp_dir
-      {id: id, result: result}
+      env.response.status_code = 200
+      problems = [{type: "unformatted", result: result}]
+      {problems: problems, error: ""}.to_json
     else
       env.response.status_code = 400
-      {error: "you must supply an id and file content"}
+      {problems: [] of String, error: "you must supply an id and file content"}.to_json
     end
   rescue error : Exception
     env.response.status_code = 666
-    {error: error.message}
+    {problems: [] of String, error: error.message}.to_json
   end
 end
 

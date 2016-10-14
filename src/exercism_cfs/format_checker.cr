@@ -2,7 +2,7 @@ module ExercismCfs
   module FormatChecker
     extend self
 
-    def check_code_file(filepath : String)
+    def valid_format?(filepath : String)
       system %(crystal tool format --check #{filepath})
     end
   end
