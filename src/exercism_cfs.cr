@@ -26,7 +26,7 @@ post "/check" do |env|
     if id && contents
       file_handler = ExercismCfs::FileHandler.new(contents)
       filepath = file_handler.save_code_file
-      unformatted = ExercismCfs::FormatChecker.valid_format?(filepath)
+      unformatted = !ExercismCfs::FormatChecker.valid_format?(filepath)
       result = if unformatted
                  "true"
                else

@@ -33,32 +33,33 @@ end
 
 ## Example Client
 ### Client Code
-```ruby
-require 'uri'
-require 'net/http'
-require 'json'
-require 'securerandom'
+```crystal
+require "uri"
+require "http/client"
+require "json"
 
-url = URI("http://localhost:3000/check")
+uri = URI.parse("http://localhost:3000/check")
 
-file = open("./spec/fixtures/no_error_file.cr")
+text = File.read("spec/fixtures/no_error_file.cr")
 
-http = Net::HTTP.new(url.host, url.port)
-
-request = Net::HTTP::Post.new(url)
-request["content-type"] = 'application/json'
-request.body = {id: SecureRandom.uuid, contents: file.read}.to_json
-
-response = http.request(request)
-puts response.read_body
+body = {id: "whatever", contents: text}.to_json
+headers = HTTP::Headers{"content-type" => "application/json"}
+HTTP::Client.post(uri, headers: headers, body: body) do |response|
+  puts response.body_io.gets
+end
 ```
 
-### Client Response (Unformatted)
+### Client Response Success (Unformatted)
 ```json
-{"id": "d96b02cd-4b22-452a-8f54-a8b4819fc457", "result": "unformatted"}
+{"problems": [{"type": "unformatted", "result": "true"}], "error": ""}
 ```
 
-### Client Response (Formatted)
+### Client Response Success (Formatted)
 ```json
-{"id": "cd35fe13-9196-4aa3-bcd8-9b8ea3984b20", "result": "formatted"}
+{"problems": [{"type": "unformatted", "result": "false"}], "error": ""}
+```
+
+### Client Response Failure
+```json
+{"problems": [], "error": "you must supply an id and file content"}
 ```
