@@ -4,6 +4,8 @@ Tiny format checking service for Crystal files.
 
 Give it a ID and the contents of a file and it'll tell you if it's formatted or not.
 
+Deployed at: `https://glacial-thicket-22416.herokuapp.com`
+
 ## Example Files
 ### Unformatted
 ```crystal
