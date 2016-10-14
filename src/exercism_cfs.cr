@@ -21,20 +21,22 @@ end
 post "/check" do |env|
   begin
     env.response.content_type = "application/json"
-    puts "env: #{env.params}"
-    uuid = env.params.json["uuid"]?.to_s
-    puts "uuid: #{uuid}"
+    id = env.params.json["id"]?.to_s
     contents = env.params.json["contents"]?.to_s
-    puts "contents:\n#{contents}"
-    if uuid && contents
-      file_handler = ExercismCfs::FileHandler.new(uuid, contents)
+    if id && contents
+      file_handler = ExercismCfs::FileHandler.new(contents)
       filepath = file_handler.save_code_file
-      result = ExercismCfs::FormatChecker.check_code_file(filepath) ? "formatted" : "unformatted"
+      formatted = ExercismCfs::FormatChecker.check_code_file(filepath)
+      result = if formatted
+                 "formatted"
+               else
+                 "unformatted"
+               end
       file_handler.remove_tmp_dir
-      {uuid: uuid, result: result}
+      {id: id, result: result}
     else
       env.response.status_code = 400
-      {error: "you must supply a uuid and file contents"}
+      {error: "you must supply an id and file content"}
     end
   rescue error : Exception
     env.response.status_code = 666

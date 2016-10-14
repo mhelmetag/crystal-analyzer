@@ -1,9 +1,11 @@
+require "random"
 require "file_utils"
 
 module ExercismCfs
   class FileHandler
-    def initialize(uuid : String, contents : String)
-      @dirpath = "./tmp/#{uuid}"
+    def initialize(contents : String)
+      id = Random.new.next_int
+      @dirpath = "./tmp/file_#{id}"
       @filepath = "#{@dirpath}/code.cr"
       @contents = contents
     end
