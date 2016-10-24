@@ -1,10 +1,13 @@
-# Exercism CFS
+# Crystal Analyzer
 ## Description/Usage
 Tiny format checking service for Crystal files.
 
 Give it an ID and the contents of a crystal file and it'll tell you if it's formatted or not.
 
 Deployed at: `https://glacial-thicket-22416.herokuapp.com`
+
+## Todo
+Extend the functionality to parse files to give feedback for general code smells and Crystal specific improvements.
 
 ## Example Files
 ### Unformatted
@@ -35,13 +38,15 @@ end
 
 ## Example Client
 ### Client Code
+Found in `examples/client.cr`
+
 ```crystal
 require "uri"
 require "http/client"
 require "json"
 
 uri = URI.parse("http://localhost:3000/check")
-text = File.read("spec/fixtures/test.cr")
+text = File.read("spec/fixtures/error_file.cr")
 body = {id: "test.cr", contents: text}.to_json
 headers = HTTP::Headers{"content-type" => "application/json"}
 

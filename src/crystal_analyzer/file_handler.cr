@@ -1,7 +1,7 @@
 require "random"
 require "file_utils"
 
-module ExercismCfs
+module CrystalAnalyzer
   class FileHandler
     def initialize(contents : String)
       id = Random.new.next_int

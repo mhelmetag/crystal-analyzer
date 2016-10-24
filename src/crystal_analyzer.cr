@@ -1,4 +1,4 @@
-require "./exercism_cfs/*"
+require "./crystal_analyzer/*"
 
 require "kemal"
 require "json"
@@ -15,7 +15,7 @@ end
 
 get "/version" do |env|
   env.response.content_type = "application/json"
-  {version: ExercismCfs::VERSION}.to_json
+  {version: CrystalAnalyzer::VERSION}.to_json
 end
 
 post "/check" do |env|
@@ -24,9 +24,9 @@ post "/check" do |env|
     id = env.params.json["id"]?.to_s
     contents = env.params.json["contents"]?.to_s
     unless id.empty? || contents.empty?
-      file_handler = ExercismCfs::FileHandler.new(contents)
+      file_handler = CrystalAnalyzer::FileHandler.new(contents)
       filepath = file_handler.save_code_file
-      unformatted = !ExercismCfs::FormatChecker.valid_format?(filepath)
+      unformatted = !CrystalAnalyzer::FormatChecker.valid_format?(filepath)
       result = if unformatted
                  "true"
                else

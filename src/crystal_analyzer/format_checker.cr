@@ -1,4 +1,4 @@
-module ExercismCfs
+module CrystalAnalyzer
   module FormatChecker
     extend self
 
