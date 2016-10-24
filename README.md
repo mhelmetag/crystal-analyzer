@@ -7,7 +7,7 @@ Give it an ID and the contents of a crystal file and it'll tell you if it's form
 Deployed at: `https://glacial-thicket-22416.herokuapp.com`
 
 ## Todo
-Extend the functionality to parse files to give feedback for general code smells and Crystal specific improvements.
+Extend the functionality to give feedback for general code smells and Crystal specific improvements.
 
 ## Example Files
 ### Unformatted
