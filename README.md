@@ -1,5 +1,4 @@
-# Crystal Analyzer
-![Build Status](https://travis-ci.org/mhelmetag/crystal-analyzer.svg?branch=master)
+# Crystal Analyzer ![Build Status](https://travis-ci.org/mhelmetag/crystal-analyzer.svg?branch=master)
 
 ## Description/Usage
 Tiny format checking service for Crystal files.
