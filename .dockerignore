@@ -11,3 +11,4 @@ shard.lock
 LICENSE
 README.md
 /tmp/
+/spec/

@@ -4,13 +4,10 @@ require "file_utils"
 module CrystalAnalyzer
   class FileHandler
     def initialize(contents : String)
-      id = Random.new_seed
-      @file_id = "file_#{id}"
       @contents = contents
     end
 
     def check_tmp_dir
-      puts [root, tempdir, tempfile]
       unless Dir.exists?(tempdir)
         Dir.mkdir_p(tempdir)
       end
@@ -33,11 +30,15 @@ module CrystalAnalyzer
     end
 
     def tempdir
-      @tempdir ||= File.expand_path(@file_id, root)
+      @tempdir ||= File.expand_path(file_id, root)
     end
 
     def tempfile
       @tempfile ||= File.join(tempdir, "code.cr")
+    end
+
+    def file_id
+      @file_id ||= "file_#{Random.new_seed}"
     end
   end
 end
