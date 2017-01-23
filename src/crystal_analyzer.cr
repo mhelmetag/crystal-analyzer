@@ -24,7 +24,7 @@ post "/check" do |env|
     id = env.params.json["id"]?.to_s
     contents = env.params.json["contents"]?.to_s
     unless id.empty? || contents.empty?
-      puts "id: #{id}\ncontents: #{contents}"
+      puts "id: #{id}\ncontents:\n#{contents}"
       file_handler = CrystalAnalyzer::FileHandler.new(contents)
       filepath = file_handler.save_code_file
       puts "filepath: #{filepath}"
