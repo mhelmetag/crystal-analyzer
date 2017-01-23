@@ -5,4 +5,9 @@
 /.shards/
 /crystal_analyzer
 shard.lock
+/.git/
+/examples/
+.travis.yml
+LICENSE
+README.md
 /tmp/
