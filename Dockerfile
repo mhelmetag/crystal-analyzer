@@ -7,7 +7,7 @@ RUN crystal deps
 
 ADD . /app
 
-RUN crystal build /app/src/crystal_analyzer.cr
+RUN crystal build --release /app/src/crystal_analyzer.cr
 
 # Only used locally... Heorku doesn't allow EXPOSE
 EXPOSE 80

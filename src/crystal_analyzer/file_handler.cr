@@ -30,15 +30,15 @@ module CrystalAnalyzer
     end
 
     def tempdir
-      @tempdir ||= File.expand_path(file_id, root)
+      @tempdir ||= File.expand_path(dirname, root)
     end
 
     def tempfile
       @tempfile ||= File.join(tempdir, "code.cr")
     end
 
-    def file_id
-      @file_id ||= "file_#{Random.new_seed}"
+    def dirname
+      @dirname ||= "file_#{Random.new_seed}"
     end
   end
 end
